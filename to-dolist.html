@@ -29,15 +29,14 @@
 
 <body class="bg-dark d-flex justify-content-center">
 
-    <div class="mt-4">
+    <div id="firstInput">
         <h1 class="text-light fw-bold mx-2">To-Do List</h1>
         <input type="text" id="todoInput" placeholder="Add new todo">
         <button onclick="addTodo()" class="btn btn-primary bg-warning">Add Todo</button>
         <ul id="todoList" class="todo-list text-light fw-medium "></ul>
     </div>
-    <div id="second_input" class="mt-3 mx-auto ">
-        <input type="text">
-        <button onclick="doneEditing()">Done</button>
+    <div id="secondInput" class="mt-3 mx-auto ">
+        
     </div>
 </body>
 
@@ -45,9 +44,10 @@
 
 
 <script>
-    let second_input = document.getElementById("second_input")
-    second_input.style.display = "none"
+    let secondInput = document.getElementById("secondInput")
+    secondInput.style.display = "none"
     let array = []
+    // let index;
 
     function addTodo() {
         array.push(todoInput.value)
@@ -57,7 +57,23 @@
         todoInput.value = ""
     }
 
+    function doneEditing(index) {
+        console.log(index);
+        array.splice(index,1,input2.value)
+
+        // let a = array[index] = input2.value
+        // console.log(a);
+        display()
+         firstInput.style.display = "block"
+        secondInput.style.display = "none"
+        // console.log(params);
+
+       
+    }
+    let params ;
+
     function deleteTodo(params) {
+        params = params
         console.log(params);
         array.splice(params,1)
         console.log(array);
@@ -66,17 +82,22 @@
     function display() {
         todoList.innerHTML = ''
         array.forEach((arr, index) => {
+            
             todoList.innerHTML += 
-            `<p>${arr}  <button onclick="editTodo()">Edit</button>  <button onclick ="deleteTodo(${index})">Delete</button> </p>`
+            `<p>${arr}  <button onclick="editTodo(${index})">Edit</button>  <button onclick ="deleteTodo(${index})">Delete</button> </p>`
         })
     }
     display()
 
-    function editTodo() {
-        second_input.style.display = "block"
-        if (newValue !== null){
-            alert("New Value Provided")
-        }
+    function editTodo(index) {
+        console.log(index);
+        console.log(array[index]);
+        firstInput.style.display = "none"
+        secondInput.style.display = "block"
+        
+        secondInput.innerHTML = `<input type="text" id="input2" >
+        <button onclick="doneEditing(${index})">Done</button>`
+        input2.value = array[index]
     }
 
 
